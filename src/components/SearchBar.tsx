@@ -1,6 +1,9 @@
-import React from "react";
+interface searchBarProps {
+  search: string;
+  setSearch: (value: string) => void;
+}
 
-const SearchBar = () => {
+const SearchBar = ({ search, setSearch }: searchBarProps) => {
   return (
     <div>
       <input
@@ -8,6 +11,8 @@ const SearchBar = () => {
         name="search"
         id="search"
         placeholder="Search movies..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
       />
     </div>
   );
