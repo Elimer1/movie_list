@@ -4,7 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import NotFound from "./NotFound";
 
 const MovieDetails = () => {
-  const { movieList, loading, error } = UseFetch();
+  const { movieList, loading, error } = UseFetch(
+    "https://jsonplaceholder.typicode.com/posts",
+  );
   const { id: movieId } = useParams();
   const navigate = useNavigate();
   const [favorite, setFavorite] = useState<boolean>(false);

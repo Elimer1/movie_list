@@ -1,28 +1,34 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 interface searchBarProps {
-  search: string;
-  setSearch: (value: string) => void;
+  onSearchsubmit: (value: string) => void;
 }
 
-const SearchBar = ({ search, setSearch }: searchBarProps) => {
+const SearchBar = ({ onSearchsubmit }: searchBarProps) => {
   const searchref = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.SubmitEvent): void => {
+    e.preventDefault();
+    if (searchref.current) {
+      onSearchsubmit(searchref.current.value);
+    }
+  };
 
   useEffect(() => {
     searchref.current?.focus();
   }, []);
+
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <input
         ref={searchref}
         type="text"
         name="search"
         id="search"
         placeholder="Search movies..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
       />
-    </div>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 

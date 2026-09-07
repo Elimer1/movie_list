@@ -17,7 +17,7 @@ const Favorites = () => {
                   handleFavorites(favorite);
                 }}
               >
-                heart
+                ★
               </button>
             </li>
           );

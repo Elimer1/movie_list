@@ -1,4 +1,9 @@
-import { createContext, useState, type PropsWithChildren } from "react";
+import {
+  createContext,
+  useMemo,
+  useState,
+  type PropsWithChildren,
+} from "react";
 import type { Movie } from "../components/MovieList";
 
 interface FavoritesProps {
@@ -13,18 +18,21 @@ export const FavoriteContext = createContext<FavoritesProps>({
 
 const FavoritesProvider = ({ children }: PropsWithChildren) => {
   const [favorites, setFavorites] = useState<Movie[]>([]);
-  const handleFavorites = (favorite: Movie) => {
-    if (favorites.some((fav) => fav.id === favorite.id)) {
-      setFavorites(favorites.filter((fav) => fav.id !== favorite.id));
-    } else {
-      setFavorites([...favorites, favorite]);
-    }
-  };
 
+  const handleFavorites = (favorite: Movie) => {
+    setFavorites((prevFavorites) => {
+      if (prevFavorites.some((fav) => fav.id === favorite.id)) {
+        return prevFavorites.filter((fav) => fav.id !== favorite.id);
+      } else {
+        return [...prevFavorites, favorite];
+      }
+    });
+  };
+  const value = useMemo(() => ({ favorites, handleFavorites }), [favorites]);
   return (
-    <FavoriteContext value={{ favorites, handleFavorites }}>
+    <FavoriteContext.Provider value={value}>
       {children}
-    </FavoriteContext>
+    </FavoriteContext.Provider>
   );
 };
 
