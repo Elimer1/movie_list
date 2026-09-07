@@ -4,7 +4,9 @@ import MovieList from "../components/MovieList";
 import { useState } from "react";
 
 const Movies = () => {
-  const { movieList, loading, error } = UseFetch();
+  const { movieList, loading, error } = UseFetch(
+    "https://jsonplaceholder.typicode.com/posts",
+  );
 
   const [search, setSearch] = useState<string>("");
 
